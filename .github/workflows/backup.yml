@@ -1,1 +1,23 @@
 name: Backups
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get Secrets
+      uses: bitwarden/sm-action@v1
+      with:
+        access_token: ${{ secrets.BW_ACCESS_TOKEN }}
+        base_url: https://vault.bitwarden.eu
+        secrets: |
+          9daacb93-c531-467d-a26b-b147008919ee > DOCKER_USERNAME
+          812e5bc9-a062-438f-9467-b1470088ee32 > DOCKER_PASSWORD
